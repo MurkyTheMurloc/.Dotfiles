@@ -1,0 +1,9 @@
+frame = "buttonless"
+title-hidden = true
+fork = true
+tabs = false
+
+[font]
+normal = ["JetBrains Mono"]
+size = 15
+

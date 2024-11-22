@@ -3,7 +3,14 @@
 *
 
 # Don't ignore these folders
-!nvim/*
-!neovide/*
-!alacritty/*
-!aerospace/*
+!nvim/
+!neovide/
+!alacritty/
+!aerospace/
+
+# Include files inside the folders (since folders are ignored by default)
+!nvim/**/*
+!neovide/**/*
+!alacritty/**/*
+!aerospace/**/*
+
