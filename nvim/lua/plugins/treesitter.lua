@@ -4,7 +4,7 @@ return {
   build = ":TSUpdate", -- Automatically install/update parsers
   event = { "BufReadPost", "BufNewFile" },
   dependencies = {
-    "windwp/nvim-ts-autotag",               -- Auto close HTML/JSX tags
+  --  "windwp/nvim-ts-autotag",               -- Auto close HTML/JSX tags
     --"JoosepAlviste/nvim-ts-context-commentstring", -- Contextual comments
   },
 
@@ -39,9 +39,9 @@ return {
     indent = {
       enable = true,                     -- Enable smart indentation
     },
-    autotag = {
-      enable = true,                     -- Auto close and rename HTML/JSX tags
-    },
+   -- autotag = {
+   --   enable = true,                     -- Auto close and rename HTML/JSX tags
+   -- },
  --refactor = {
   --      highlight_definitions = { enable = true },
  --       highlight_current_scope = { enable = true },
