@@ -1,6 +1,3 @@
-
-
-
 local project_root = vim.fn.systemlist('git rev-parse --show-toplevel') -- Get the root of the Git project
 
 -- If not in a git project, fallback to the current directory
@@ -15,10 +12,9 @@ local search_dir = project_root .. "/packages/frontend" -- Adjust this to your s
 
 return {
   'nvim-telescope/telescope.nvim',
-    lazy = true,
   dependencies = {
     'nvim-lua/plenary.nvim',
-   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'neovim/nvim-lspconfig',
   },
   opts = {
@@ -33,8 +29,8 @@ return {
         'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden', '--glob', '!.git/*', search_dir
       },
       extensions = {
-			fzf = {},
-		},
+        fzf = {},
+      },
       hidden = true, -- Show hidden files like .env
       file_ignore_patterns = {  ".git/" }, -- Ignore directories like node_modules and .git
     },
@@ -43,20 +39,16 @@ return {
     local telescope = require("telescope")
     telescope.setup(opts)
     telescope.load_extension("fzf")
+local builtin = require("telescope.builtin")
+         vim.keymap.set("n", "gd", builtin.lsp_definitions, { noremap = true, silent = true, desc = "Go to definition" })
+    vim.keymap.set("n", "gr", builtin.lsp_references, { noremap = true, silent = true, desc = "Find references" })
+    vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>ff", builtin.find_files, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>fg", builtin.live_grep, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>fc", builtin.colorscheme, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>f.", builtin.resume, { noremap = true, silent = true })
   end,
-  keys = function()
-    local builtin = require("telescope.builtin")
- local opts = { noremap = true, silent = true, buffer = bufnr }
-    return {
-      { "<leader>fb", builtin.buffers, desc = "Find Buffers" },
-      { "<leader>ff", builtin.find_files, desc = "Find Files" },
-      { "<leader>fg", builtin.live_grep, desc = "Find Grep" },
-      { "<leader>fc", builtin.colorscheme, desc = "Find Colorschemes" },
-      { "<leader>fd", builtin.diagnostics, desc = "Diagnostics" },
-      { "<leader>f.", builtin.resume, desc = "Resume" },
-      { "n", "gd", builtin.lsp_definitions,  opts},
-      { "n", "gr", builtin.lsp_references, opts },
-    }
-  end,
+ 
 }
 

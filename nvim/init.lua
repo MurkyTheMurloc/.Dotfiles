@@ -1,6 +1,7 @@
 -- Load options
 require("config.options")
-require("keymaps.telescope")
+--require("keymaps.telescope")
+require("keymaps.bindings")
 require("config.quit_pre")
 require("config.delete_swap_files")
 if vim.g.neovide then
