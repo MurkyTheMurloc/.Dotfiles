@@ -1,4 +1,6 @@
 
+
+
 local project_root = vim.fn.systemlist('git rev-parse --show-toplevel') -- Get the root of the Git project
 
 -- If not in a git project, fallback to the current directory
@@ -13,10 +15,11 @@ local search_dir = project_root .. "/packages/frontend" -- Adjust this to your s
 
 return {
   'nvim-telescope/telescope.nvim',
+    lazy = true,
   dependencies = {
     'nvim-lua/plenary.nvim',
-   -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    --'neovim/nvim-lspconfig',
+   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    'neovim/nvim-lspconfig',
   },
   opts = {
     defaults = {
@@ -29,15 +32,17 @@ return {
       vimgrep_arguments = {
         'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden', '--glob', '!.git/*', search_dir
       },
-
+      extensions = {
+			fzf = {},
+		},
       hidden = true, -- Show hidden files like .env
-      file_ignore_patterns = { "node_modules", ".git/" }, -- Ignore directories like node_modules and .git
+      file_ignore_patterns = {  ".git/" }, -- Ignore directories like node_modules and .git
     },
   },
   config = function(_, opts)
     local telescope = require("telescope")
     telescope.setup(opts)
-    --telescope.load_extension("fzf")
+    telescope.load_extension("fzf")
   end,
   keys = function()
     local builtin = require("telescope.builtin")

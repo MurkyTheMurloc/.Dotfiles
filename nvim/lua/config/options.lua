@@ -42,3 +42,5 @@ vim.opt.textwidth = 80   -- Wrap lines at 80 characters
 
 vim.opt.guifont = "JetBrains Mono:h15"
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
