@@ -1,6 +1,6 @@
 -- Load options
 require("config.options")
---require("keymaps.telescope")
+require("keymaps.file_browser")
 require("keymaps.bindings")
 require("config.quit_pre")
 require("config.delete_swap_files")
