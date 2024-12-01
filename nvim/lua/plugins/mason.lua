@@ -12,7 +12,7 @@ return {
     -- Mason LSP Config setup
     require("mason-lspconfig").setup({
       ensure_installed = {
-        "ts_ls",      -- TypeScript/JavaScript
+        "vtls",      -- TypeScript/JavaScript
         "pyright",       -- Python
         "gopls",         -- Go
         "rust_analyzer", -- Rust
@@ -25,6 +25,9 @@ return {
         "sqls",          -- SQL
         "denols",        -- Deno
         "ltex",          -- Grammar
+         "dockerls",
+            "docker_compose_language_service",
+                "biome"
       },
       automatic_installation = true,
     })

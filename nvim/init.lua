@@ -1,7 +1,6 @@
 -- Load options
 require("config.options")
-require("keymaps.file_browser")
-require("keymaps.bindings")
+
 require("config.quit_pre")
 require("config.delete_swap_files")
 if vim.g.neovide then
@@ -33,10 +32,20 @@ local status, err = pcall(require, "config.lsp.tailwind")
 if not status then
   vim.notify("Error loading config.tailwind: " .. err, vim.log.levels.ERROR)
 end
+--local status, err = pcall(require, "config.lsp.grammar")
+--if not status then
+--  vim.notify("Error loading config.grammar: " .. err, vim.log.levels.ERROR)
+--end
 local status, err = pcall(require, "config.re_open")
 if not status then
   vim.notify("Error loading config.re_open: " .. err, vim.log.levels.ERROR)
 else
   require("config.re_open").setup()
 end
+
+require("config.smart_rename")
+require("keymaps.file_browser")
+require("keymaps.bindings")
+--require("config.theme")
+
 

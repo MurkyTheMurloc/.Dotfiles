@@ -13,7 +13,7 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 
 -- Visible Whitespace
 --vim.opt.list = true
---vim.opt.listchars:append("tab:──")
+--vim.opt.listchars:append("tab:⋅")
 --vim.opt.listchars:append("space:⋅")
 --vim.opt.listchars:append("trail:⋅")
 
@@ -46,3 +46,10 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.o.laststatus = 0
+
+--vim.opt.termguicolors = true
+--vim.cmd([[syntax off]]) -- Disable legacy syntax highlighting
+--vim.cmd([[set filetype=on]]) -- Enable filetype detection
+
+
+
