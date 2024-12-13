@@ -10,6 +10,7 @@ return {
 
   opts = {
     ensure_installed = {
+       "astro",      
       "go",        -- Go
       "rust",      -- Rust
       "typescript",-- TypeScript

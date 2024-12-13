@@ -3,6 +3,7 @@ return {
   {
     'saghen/blink.cmp',
     lazy = false,
+    priority = 1000,
     dependencies ={ 'saghen/blink.compat',},
     version = 'v0.*',
     opts = {

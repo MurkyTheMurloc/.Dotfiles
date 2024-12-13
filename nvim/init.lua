@@ -32,10 +32,10 @@ local status, err = pcall(require, "config.lsp.tailwind")
 if not status then
   vim.notify("Error loading config.tailwind: " .. err, vim.log.levels.ERROR)
 end
---local status, err = pcall(require, "config.lsp.grammar")
---if not status then
---  vim.notify("Error loading config.grammar: " .. err, vim.log.levels.ERROR)
---end
+local status, err = pcall(require, "config.lsp.grammar")
+if not status then
+  vim.notify("Error loading config.grammar: " .. err, vim.log.levels.ERROR)
+end
 local status, err = pcall(require, "config.re_open")
 if not status then
   vim.notify("Error loading config.re_open: " .. err, vim.log.levels.ERROR)

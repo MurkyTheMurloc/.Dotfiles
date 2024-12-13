@@ -12,7 +12,8 @@ return {
     -- Mason LSP Config setup
     require("mason-lspconfig").setup({
       ensure_installed = {
-        "vtls",      -- TypeScript/JavaScript
+         "astro",       
+        "vtsls",      -- TypeScript/JavaScript
         "pyright",       -- Python
         "gopls",         -- Go
         "rust_analyzer", -- Rust

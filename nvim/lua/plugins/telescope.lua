@@ -27,14 +27,14 @@ return {
       },
 
       -- Live grep restricted to the specified directory
-      vimgrep_arguments = {
-        'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden', '--glob', '!.git/*', search_dir
-      },
+   --   vimgrep_arguments = {
+   --     'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden', '--glob', '!.git/*', search_dir
+   --   },
       extensions = {
         fzf = {},
       },
       hidden = true, -- Show hidden files like .env
-      file_ignore_patterns = { "node_modules/", ".git/" }, -- Ignore directories like node_modules and .git
+      file_ignore_patterns = { ".git/" }, -- Ignore directories like node_modules and .git
     },
   },
   config = function(_, opts)
@@ -45,7 +45,7 @@ return {
 local builtin = require("telescope.builtin")
          vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { noremap = true, silent = true, desc = "Go to definition" })
     vim.keymap.set("n", "leader<gr>", builtin.lsp_references, { noremap = true, silent = true, desc = "Find references" })
-   -- vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
+   vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>fg", builtin.live_grep, { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>fc", builtin.colorscheme, { noremap = true, silent = true })
