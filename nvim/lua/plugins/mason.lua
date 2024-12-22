@@ -28,7 +28,9 @@ return {
         "ltex",          -- Grammar
          "dockerls",
             "docker_compose_language_service",
-                "biome"
+                "biome",
+                "eslint_d",
+                "golangci_lint_ls"
       },
       automatic_installation = true,
     })

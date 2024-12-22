@@ -15,6 +15,7 @@ return {
 					prettier = {
 						cwd = require("conform.util").root_file({
 							"package.json",
+                            ".prettier.json",
 							".prettierrc",
 							".prettierrc.json",
 							".prettierrc.yml",
@@ -32,6 +33,7 @@ return {
 					prettierd = {
 						cwd = require("conform.util").root_file({
 							"package.json",
+                            ".prettier.json",
 							".prettierrc",
 							".prettierrc.json",
 							".prettierrc.yml",
@@ -46,6 +48,7 @@ return {
 						}),
 						require_cwd = true,
 					},
+
 				},
 				formatters_by_ft = {
 					css = { "prettierd", "prettier", stop_after_first = true },

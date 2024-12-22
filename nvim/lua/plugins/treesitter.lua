@@ -12,6 +12,9 @@ return {
     ensure_installed = {
        "astro",      
       "go",        -- Go
+"lua",
+			"luadoc",
+			"luap",
       "rust",      -- Rust
       "typescript",-- TypeScript
       "sql",       -- SQL

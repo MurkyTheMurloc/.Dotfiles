@@ -19,22 +19,20 @@ return {
  "nvim-telescope/telescope-frecency.nvim",
     'neovim/nvim-lspconfig',
   },
-  opts = {
+   opts = {
     defaults = {
-      -- Specify find command with search_dir
+            layout_strategy = 'vertical',
+    layout_config = {
+      mirror = false, -- Ensures preview is at the bottom
+    }, 
       find_command = {
-        'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--exclude', 'node_modules', '--follow', '--max-depth', '100', search_dir
+        'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--exclude', 'node_modules', '--follow'
       },
-
-      -- Live grep restricted to the specified directory
-   --   vimgrep_arguments = {
-   --     'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--hidden', '--glob', '!.git/*', search_dir
-   --   },
+      hidden = true, -- Include hidden files
+      file_ignore_patterns = { "%.git/" }, -- Ignore .git directory
       extensions = {
         fzf = {},
       },
-      hidden = true, -- Show hidden files like .env
-      file_ignore_patterns = { ".git/" }, -- Ignore directories like node_modules and .git
     },
   },
   config = function(_, opts)
