@@ -7,10 +7,9 @@
 !neovide/
 !alacritty/
 !aerospace/
-
+!ghostty/
 # Include files inside the folders (since folders are ignored by default)
 !nvim/**/*
 !neovide/**/*
-!alacritty/**/*
 !aerospace/**/*
-
+!ghostty/**/*

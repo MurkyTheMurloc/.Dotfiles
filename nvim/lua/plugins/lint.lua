@@ -122,21 +122,28 @@ end
 
     -- Keymap to manually trigger fixing
     vim.keymap.set("n", "<leader>lf", function()
-      local filetype = vim.bo.filetype
       local bufnr = vim.api.nvim_get_current_buf()
+      local filetype = vim.bo.filetype
 
       -- Determine the linter(s) for the current filetype
       local linters = lint.linters_by_ft[filetype]
-      if linters then
-        for _, linter in ipairs(linters) do
-          if lint.linters[linter] and lint.linters[linter].fix then
-            lint.linters[linter].fix(bufnr)
-          end
-        end
-        -- Trigger file save after fixing
-        vim.cmd("write")
-      else
+      if not linters or #linters == 0 then
+        vim.notify("No linter configured for filetype:", filetype)
+        return
       end
+
+      -- Use the first active linter
+      local linter = linters[1]
+      if not lint.linters[linter] or not lint.linters[linter].fix then
+        vim.notify("Fix function not implemented for linter:", linter)
+        return
+      end
+
+      vim.notify("Running fix with linter:", linter)
+      lint.linters[linter].fix(bufnr)
+
+      -- Trigger file save after fixing
+      vim.cmd("write")
     end, { desc = "Trigger lint fix for the current file" })
 
   
