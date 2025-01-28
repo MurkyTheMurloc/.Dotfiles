@@ -11,11 +11,9 @@ vim.opt.shiftwidth = 4   -- Number of spaces for each auto-indent
 vim.opt.softtabstop = 4  -- Number of spaces for tab in insert mode
 vim.opt.expandtab = true -- Convert tabs to spaces
 
--- Visible Whitespace
---vim.opt.list = true
---vim.opt.listchars:append("tab:⋅")
---vim.opt.listchars:append("space:⋅")
---vim.opt.listchars:append("trail:⋅")
+vim.opt.list = true
+vim.opt.listchars:append({ tab = "──", space = "⋅", trail = "⋅" })
+vim.opt.fillchars:append({ diff = "╱" })
 
 -- Enable auto-indentation
 vim.opt.smartindent = true

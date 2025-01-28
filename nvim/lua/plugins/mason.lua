@@ -19,7 +19,6 @@ return {
         "rust_analyzer", -- Rust
         "clangd",        -- C/C++
         "html",          -- HTML
-        "cssls",         -- CSS
         "svelte",        -- Svelte
         "tailwindcss",   -- Tailwind CSS
         "graphql",       -- GraphQL
@@ -29,7 +28,7 @@ return {
          "dockerls",
             "docker_compose_language_service",
                 "biome",
-                "eslint_d",
+                "eslint",
                 "golangci_lint_ls"
       },
       automatic_installation = true,

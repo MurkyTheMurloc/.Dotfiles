@@ -1,32 +1,56 @@
 
+
 return {
   {
     'saghen/blink.cmp',
     lazy = false,
     priority = 1000,
-    dependencies ={ 'saghen/blink.compat',},
+    dependencies = { 'saghen/blink.compat' },
     version = 'v0.*',
     opts = {
       keymap = { preset = 'enter' },
-      highlight = { use_nvim_cmp_as_default = true },
-      nerd_font_variant = 'mono',
+        appearance = { use_nvim_cmp_as_default = true },
       sources = {
-        completion = {
-          enabled_providers = { 'lsp', 'path', 'snippets', 'buffer' },
+            default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+    completion = {
+      trigger = {
+        show_on_insert_on_trigger_character = true,
+      },
+      list = {
+        selection = {
+          preselect = true,
+          auto_insert = true,
+          preselect =true
         },
       },
+     
+      menu = {
+        draw = {
+          columns = {
+            { "label", "label_description", gap = 1 },
+            { "kind_icon", "kind" }
+          },
+          treesitter = { 'lsp' },
+        }
+      },
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 500,
+        treesitter_highlighting = true,
+      },
+      ghost_text = {
+        enabled = false,
+                    
+      },
+    },    
     },
-    opts_extend = { "sources.completion.enabled_providers" },
-  },
-{
-  'neovim/nvim-lspconfig',
-  dependencies = { 'saghen/blink.cmp' },
-  config = function(_, opts)
-    local lspconfig = require('lspconfig')
-    for server, config in pairs(opts.servers or {}) do opts = { impersonate_nvim_cmp = true }  
-        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-        lspconfig[server].setup(config)
-    end
-  end
+ opts_extend = { "sources.default" }
+
+  
+ 
+
+
+    }
 }
-}
+
