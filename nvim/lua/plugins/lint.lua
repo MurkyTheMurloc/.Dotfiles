@@ -9,9 +9,9 @@ return {
     local lint = require("lint")
 
     local linter_config_files = {
-      biomejs = "biome.json",
+      biomejs = "biome.*",
       eslint_d = ".eslintrc.*", -- Match .eslintrc.js, .eslintrc.json, etc.
-      deno = "deno.json",
+      deno = "deno.*",
       eslint_d = "eslint.*"
     }
 
@@ -82,7 +82,7 @@ end
 
     local function biome_fix(bufnr)
       local file_path = vim.api.nvim_buf_get_name(bufnr)
-      local biome_cmd = string.format("biome format %s", vim.fn.shellescape(file_path))
+      local biome_cmd = string.format("biome lint --write %s", vim.fn.shellescape(file_path))
       local result = os.execute(biome_cmd)
 
       -- Reload buffer after fixing

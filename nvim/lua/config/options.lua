@@ -12,8 +12,12 @@ vim.opt.softtabstop = 4  -- Number of spaces for tab in insert mode
 vim.opt.expandtab = true -- Convert tabs to spaces
 
 vim.opt.list = true
-vim.opt.listchars:append({ tab = "──", space = "⋅", trail = "⋅" })
-vim.opt.fillchars:append({ diff = "╱" })
+vim.opt.listchars:append({
+    tab = "··",
+    space = "⋅",
+    trail = "⋅",
+})
+
 
 -- Enable auto-indentation
 vim.opt.smartindent = true
@@ -36,7 +40,8 @@ end
 vim.diagnostic.config({ virtual_text = false })
 -- Set a maximum line width for text
 vim.opt.textwidth = 80   -- Wrap lines at 80 characters
---vim.opt.colorcolumn = "80" -- Highlight the 80-character limit
+vim.opt.colorcolumn = "80" -- Highlight the 80-character limit
+
 
 vim.opt.guifont = "JetBrains Mono:h15"
 
@@ -45,9 +50,8 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.o.laststatus = 0
 
---vim.opt.termguicolors = true
---vim.cmd([[syntax off]]) -- Disable legacy syntax highlighting
---vim.cmd([[set filetype=on]]) -- Enable filetype detection
-
+vim.opt.termguicolors = true
+vim.cmd([[syntax off]]) -- Disable legacy syntax highlighting
+vim.cmd([[set filetype=on]]) -- Enable filetype detection
 
 

@@ -3,7 +3,7 @@ return {
   -- Add the nvim-colorizer.lua plugin
   {
     "norcalli/nvim-colorizer.lua",
-    lazy = true,
+
     config = function()
       require("colorizer").setup({
         -- Enable for specific file types or set `*` for all file types

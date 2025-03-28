@@ -1,9 +1,24 @@
 return {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    ---@module "ibl"
-    ---@type ibl.config
-    config = function()
-    require("ibl").setup()
-    end,
+	"lukas-reineke/indent-blankline.nvim",
+
+	main = "ibl",
+	---@module "ibl"
+	---@type ibl.config
+	opts = {
+		indent = {
+            char = "│",
+			tab_char = "│", -- or "│", "▏", "▎"
+			highlight = {
+				"Whitespace",
+			},
+			smart_indent_cap = true,
+			priority = 1,
+		},
+		scope = { enabled = false },
+		whitespace = {
+			highlight = {
+				"Whitespace",
+			},
+		},
+	},
 }

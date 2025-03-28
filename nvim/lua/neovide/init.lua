@@ -15,4 +15,4 @@ vim.g.neovide_floating_shadow = false
 vim.opt.winblend = 50
 vim.opt.pumblend = 50
 
-vim.g.neovide_underline_stroke_scale = 2.0
+vim.g.neovide_underline_stroke_scale = 2

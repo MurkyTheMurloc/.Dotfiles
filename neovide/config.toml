@@ -4,6 +4,13 @@ fork = true
 tabs = false
 
 [font]
-normal = ["JetBrains Mono"]
+normal = ["JetBrainsMono Nerd Font"]
 size = 15
+
+[font.features]
+
+"JetBrains Mono" = ["-liga", "-calt", "-clig"]
+"JetBrains Mono Nerd Font" = ["-liga", "-calt", "-clig"]
+"JetBrains Mono Nerd Font Mono" = ["-liga", "-calt", "-clig"]
+"JetBrains Mono Nerd Font Propo" = ["-liga", "-calt", "-clig"]
 

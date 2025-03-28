@@ -2,7 +2,6 @@
 return {
   "nvim-telescope/telescope-file-browser.nvim",
   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  lazy = true,
   config = function()
     local telescope = require("telescope")
     local fb_actions = require("telescope._extensions.file_browser.actions")
@@ -26,7 +25,7 @@ return {
     local function safe_goto_parent_dir(prompt_bufnr)
       local current_picker = actions_state.get_current_picker(prompt_bufnr)
       if not current_picker then
-        notify("Error: Unable to get current picker.", vim.log.levels.ERROR, { title = "Debug" })
+       -- notify("Error: Unable to get current picker.", vim.log.levels.ERROR, { title = "Debug" })
         return
       end
 
