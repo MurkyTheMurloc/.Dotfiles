@@ -11,7 +11,9 @@ return {
         -- Mason LSP Config setup
         require("mason-lspconfig").setup({
             ensure_installed = {
+                "lua_ls",
                 "astro",
+                "cssls",
                 "vtsls",         -- TypeScript/JavaScript
                 "pyright",       -- Python
                 -- "gop_ls",      -- Go
@@ -27,7 +29,7 @@ return {
                 "dockerls",
                 "docker_compose_language_service",
                 "biome",
-                "eslint",
+                --                "eslint_d",
                 "ruff",
 
             },

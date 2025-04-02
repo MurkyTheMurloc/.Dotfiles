@@ -1,73 +1,78 @@
+-- Example: lua/plugins/treesitter.lua
 return {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate", -- Automatically install/update parsers
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = {
-        --  "windwp/nvim-ts-autotag",               -- Auto close HTML/JSX tags
-        --"JoosepAlviste/nvim-ts-context-commentstring", -- Contextual comments
-    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        -- Run TSUpdate command after Treesitter is updated/installed
+        build = ":TSUpdate",
+        -- Lazy load on buffer open events
+        event = { "BufReadPost", "BufNewFile" },
+        -- List other *plugins* that Treesitter might depend on or integrate with
+        dependencies = {
+            "windwp/nvim-ts-autotag", -- Auto close HTML/JSX tags
+            -- Add other Treesitter-related *plugins* here if needed
+            -- "JoosepAlviste/nvim-ts-context-commentstring",
+        },
+        opts = {
+            -- Ensure SurrealQL is listed here along with others
+            ensure_installed = {
+                "astro",
+                "go",
+                "lua",
+                "luadoc",
+                "luap",
+                "rust",
+                "typescript",
+                "sql",
+                "html",
+                "css",
+                "graphql",
+                "svelte",
+                "javascript",
+                "tsx",
+                "jsdoc",
+                "dockerfile",
+                "json",
+                "json5",
+                "jsonc",
+                "regex",
+                "toml",
+                "yaml",
+                "surrealdb", -- <<< ADDED HERE
+            },
 
-    opts = {
-        ensure_installed = {
-            "astro",
-            "go", -- Go
-            "lua",
-            "luadoc",
-            "luap",
-            "rust", -- Rust
-            "typescript", -- TypeScript
-            "sql",  -- SQL
-            "html", -- HTML
-            "css",  -- CSS
-            "graphql", -- GraphQL
-            "svelte", -- Svelte
-            "javascript", -- Required for SolidJS
-            "tsx",  -- JSX/TSX for SolidJS
-            "jsdoc",
-            "dockerfile",
-            "json",
-            "json5",
-            "jsonc",
-            "regex",
-            "astro",
-            "toml",
-            "yaml",
-        },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
-            enable = true,                       -- Enable syntax highlighting
-            additional_vim_regex_highlighting = false, -- Disable regex fallback for performance
-        },
-        indent = {
-            enable = true, -- Enable smart indentation
-        },
-        autotag = {
-            enable = true, -- Auto close and rename HTML/JSX tags
-        },
-        refactor = {
-            highlight_definitions = { enable = true },
-            highlight_current_scope = { enable = true },
-            smart_rename = { enable = true, keymaps = { smart_rename = "<leader>rn" } },
-        },
-        --context_commentstring = {
-        --     enable = true,                     -- Enable context-based commenting
-        --    enable_autocmd = false,
-        -- },
+            -- No 'languages' key needed here
 
-    },
-    config = function(_, opts)
-        if type(opts.ensure_installed) == "table" then
-            ---@type table<string, boolean>
-            local added = {}
-            opts.ensure_installed = vim.tbl_filter(function(lang)
-                if added[lang] then
-                    return false
-                end
-                added[lang] = true
-                return true
-            end, opts.ensure_installed)
+            auto_install = true, -- Automatically install missing parsers listed in ensure_installed
+
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+            },
+            indent = {
+                enable = true,
+            },
+            autotag = {
+                enable = true, -- Config for nvim-ts-autotag (if it uses this integration)
+            },
+            refactor = {       -- Assuming this is for nvim-treesitter-refactor or similar
+                highlight_definitions = { enable = true },
+                highlight_current_scope = { enable = true },
+                smart_rename = { enable = true, keymaps = { smart_rename = "<leader>rn" } },
+            },
+        },
+        config = function(_, opts)
+            -- Optional deduplication logic (keep if you like it)
+            if type(opts.ensure_installed) == "table" then
+                local added = {}
+                opts.ensure_installed = vim.tbl_filter(function(lang)
+                    if added[lang] then return false end
+                    added[lang] = true
+                    return true
+                end, opts.ensure_installed)
+            end
         end
-        require("nvim-treesitter.configs").setup(opts)
-    end,
+
+
+    },
+
 }

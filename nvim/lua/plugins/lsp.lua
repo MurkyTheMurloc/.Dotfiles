@@ -14,9 +14,8 @@ return {
             -- Astro `npm:@astrojs/language-server`
             lsp.astro.setup({
                 capabilities = capabilities,
-                filetypes = { "astro" },
-                cmd = { "astro-ls", "--stdio" },
             })
+
 
             -- Biome `npm:@biomejs/biome`
             --lsp.biome.setup({
@@ -118,12 +117,12 @@ return {
             })
 
             -- JSON `npm:vscode-langservers-extracted`
-            --	lsp.jsonls.setup({
-            --		capabilities = capabilities,
-            --	init_options = {
-            --		provideFormatter = false,
-            --	},
-            --})
+            lsp.jsonls.setup({
+                capabilities = capabilities,
+                init_options = {
+                    provideFormatter = false,
+                },
+            })
 
             -- Lua `brew:lua-language-server`
             lsp.lua_ls.setup({
@@ -177,9 +176,9 @@ return {
             })
 
             -- WSGL `cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer`
-            --	lsp.wgsl_analyzer.setup({
-            --	capabilities = capabilities,
-            --	})
+            lsp.wgsl_analyzer.setup({
+                capabilities = capabilities,
+            })
 
             -- Rounded borders
             vim.lsp.handlers["textDocument/hover"] =

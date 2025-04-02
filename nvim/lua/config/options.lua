@@ -1,4 +1,3 @@
-
 -- leader key
 vim.g.mapleader = " "
 -- Example Neovim options
@@ -34,12 +33,12 @@ vim.opt.foldlevelstart = 100
 
 local signs = { Error = " ", Warn = " ", Hint = "󱠂 ", Info = " " }
 for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 vim.diagnostic.config({ virtual_text = false })
 -- Set a maximum line width for text
-vim.opt.textwidth = 80   -- Wrap lines at 80 characters
+vim.opt.textwidth = 80     -- Wrap lines at 80 characters
 vim.opt.colorcolumn = "80" -- Highlight the 80-character limit
 
 
@@ -51,7 +50,12 @@ vim.g.loaded_netrwPlugin = 1
 vim.o.laststatus = 0
 
 vim.opt.termguicolors = true
-vim.cmd([[syntax off]]) -- Disable legacy syntax highlighting
+vim.cmd([[syntax off]])      -- Disable legacy syntax highlighting
 vim.cmd([[set filetype=on]]) -- Enable filetype detection
 
 
+vim.filetype.add({
+    extension = {
+        surql = 'surql', -- Maps `.surql` files to the `surql` filetype
+    },
+})
