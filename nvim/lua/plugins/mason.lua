@@ -6,7 +6,15 @@ return {
     },
     config = function()
         -- Mason setup
-        require("mason").setup()
+        require("mason").setup({
+            ui = {
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗"
+                }
+            }
+        })
 
         -- Mason LSP Config setup
         require("mason-lspconfig").setup({
@@ -15,7 +23,7 @@ return {
                 "astro",
                 "cssls",
                 "vtsls",         -- TypeScript/JavaScript
-                "pyright",       -- Python
+                "pyrefly",       -- Python
                 -- "gop_ls",      -- Go
                 "rust_analyzer", -- Rust
                 "clangd",        -- C/C++
@@ -33,7 +41,7 @@ return {
                 "ruff",
 
             },
-            automatic_installation = true,
+            automatic_installation = false,
         })
     end,
 }

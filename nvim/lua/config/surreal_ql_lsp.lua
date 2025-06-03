@@ -10,39 +10,45 @@ local find_rust_bin = function()
     end
 end
 
+
+local util = require("lspconfig.util")
+
 M.start = function()
     vim.lsp.set_log_level 'debug'
     require('vim.lsp.log').set_format_func(vim.inspect)
 
     local lsp_bin = find_rust_bin()
-    if not lsp_bin then
-        return
+    if not lsp_bin then return end
+
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    -- 🔁 Avoid starting if already attached
+    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+        if client.name == 'surrealql' then
+            return -- already attached to this buffer
+        end
     end
 
-    local client = vim.lsp.start {
+    local root_dir = util.root_pattern(".git", "surreal.config.json")(vim.api.nvim_buf_get_name(bufnr))
+        or vim.fn.getcwd()
+
+    local client = vim.lsp.start({
         name = 'surrealql',
         cmd = { lsp_bin },
-        capabilities = require("blink.cmp").get_lsp_capabilities()
-    }
+        root_dir = root_dir,
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+    })
 
-    if not client then
+    if client then
+        vim.lsp.buf_attach_client(bufnr, client)
+    else
         vim.notify('Failed to start surrealql-lsp-server', vim.log.levels.ERROR)
-        return
     end
-
-    vim.lsp.buf_attach_client(0, client)
 end
-
-local group = vim.api.nvim_create_namespace 'surrealql'
-
 M.setup = function()
-    vim.api.nvim_clear_autocmds { group = group }
-
-    vim.api.nvim_create_autocmd('FileType', {
-        group = group,
-        pattern = 'surql',
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "surql",
         callback = M.start,
     })
 end
-
 return M

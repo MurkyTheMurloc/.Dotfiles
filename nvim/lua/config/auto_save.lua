@@ -1,12 +1,13 @@
 local M = {}
 
-M.enabled = true  -- Auto-save is enabled by default
-M.interval = 4000 -- Auto-save interval in milliseconds (2s)
+M.enabled = true -- Auto-save is enabled by default
 
--- Function to save if the buffer is modified
+-- Function to save only if in visual mode and buffer is modified
 local function save_if_modified()
-    if vim.bo.modified and vim.bo.filetype ~= "" then
-        vim.cmd("silent! write")
+    if vim.fn.mode() == "v" or vim.fn.mode() == "V" or vim.fn.mode() == "\22" then -- Visual, Line, Block mode
+        if vim.bo.modified and vim.bo.filetype ~= "" then
+            vim.cmd("silent! write")
+        end
     end
 end
 
@@ -17,26 +18,15 @@ function M.toggle()
 end
 
 -- Setup auto-save
-function M.setup(opts)
-    if opts and opts.interval then
-        M.interval = opts.interval
-    end
-
-    -- Auto-save when leaving insert mode
-    vim.api.nvim_create_autocmd("InsertLeave", {
+function M.setup()
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        pattern = "*:v,*:V,*:\22", -- Any mode entering Visual modes
         callback = function()
             if M.enabled then
                 save_if_modified()
             end
         end
     })
-
-    -- Auto-save every few seconds
-    vim.fn.timer_start(M.interval, function()
-        if M.enabled then
-            save_if_modified()
-        end
-    end, { ["repeat"] = -1 })
 end
 
 return M

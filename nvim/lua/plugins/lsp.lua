@@ -14,13 +14,9 @@ return {
             -- Astro `npm:@astrojs/language-server`
             lsp.astro.setup({
                 capabilities = capabilities,
+                filetypes = { "astro" }
             })
 
-
-            -- Biome `npm:@biomejs/biome`
-            --lsp.biome.setup({
-            --			capabilities = capabilities,
-            --		})
 
             -- C `brew:llvm`
             lsp.clangd.setup({
@@ -29,6 +25,7 @@ return {
                     "clangd",
                     "--offset-encoding=utf-16",
                 },
+                filetypes = { "c", "cpp", "objc", "objcpp" }
             })
             lsp.tailwindcss.setup({
                 filetypes    = { "html", "astro", "typescriptreact" },
@@ -36,10 +33,6 @@ return {
                 root_dir     = function(fname)
                     return util.root_pattern("package.json", "deno.jsonc", "tailwind.css")(fname)
                 end
-
-
-
-
             })
             lsp.ltex.setup({
                 settings = {
@@ -56,13 +49,24 @@ return {
             -- CSS `npm:vscode-langservers-extracted`
             lsp.cssls.setup({
                 capabilities = capabilities,
+                filetypes = { "css", "scss", "less" },
             })
 
+            vim.lsp.config("denols", {
+                cmd                 = { "deno", "lsp" },
+                filetypes           = { "typescript", "typescriptreact" },
+                root_markers        = { "deno.json", "deno.jsonc" }, -- strip out ".git"
+                single_file_support = false,
+                workspace_required  = true,
+            })
             -- Deno `brew:deno`
             lsp.denols.setup({
-                capabilities = capabilities,
+                capabilities        = capabilities,
+                filetypes           = { "typescript", "typescriptreact" },
                 single_file_support = false,
-                root_dir = function(startpath)
+                workspace_required  = true,
+                root_markers        = { "deno.json", "deno.jsonc" },
+                root_dir            = function(startpath)
                     local deno_root = util.root_pattern("deno.json", "deno.jsonc")(startpath)
                     -- is there a deno.json?
                     if not deno_root then
@@ -77,6 +81,7 @@ return {
                     -- is there a tsconfig.json or package.json?
                     if not ts_root then
                         -- no tsconfig.json or package.json found -> enable denols
+                        --
                         return deno_root
                     end
                     if string.len(ts_root) > string.len(deno_root) then
@@ -87,6 +92,7 @@ return {
                     return deno_root
                 end,
             })
+
 
             -- Docker `npm:dockerfile-language-server-nodejs`
             lsp.dockerls.setup({
@@ -109,11 +115,13 @@ return {
             -- Go `brew:go`
             lsp.gopls.setup({
                 capabilities = capabilities,
+                filetypes = { "go" }
             })
 
             -- HTML `npm:vscode-langservers-extracted`
             lsp.html.setup({
                 capabilities = capabilities,
+                filetypes = { "html" }
             })
 
             -- JSON `npm:vscode-langservers-extracted`
@@ -127,11 +135,13 @@ return {
             -- Lua `brew:lua-language-server`
             lsp.lua_ls.setup({
                 capabilities = capabilities,
+                filetypes = { "lua" }
             })
 
             -- Python `npm:pyright`
             lsp.pyright.setup({
                 capabilities = capabilities,
+                filetypes = { "python" },
                 settings = {
                     pyright = {
                         -- using ruff's import organizer
@@ -148,6 +158,7 @@ return {
 
             -- Python (Linter/Formatter) `brew:ruff`
             lsp.ruff.setup({
+                filetypes = { "python" },
                 capabilities = capabilities,
                 on_init = function(client) client.server_capabilities.hoverProvider = false end,
             })
@@ -155,13 +166,20 @@ return {
             -- Rust `brew:rust-analyzer`
             lsp.rust_analyzer.setup({
                 capabilities = capabilities,
+                filetypes = { "rust" }
+
 
             })
 
             -- TypeScript `npm:@vtsls/language-server`
             lsp.vtsls.setup({
-                capabilities = capabilities,
-                single_file_support = false,
+                capabilities        = capabilities,
+                single_file_support = false, -- disable fallback single-file
+                workspace_required  = true,
+
+                filetypes           = { "typescript", "typescriptreact" },
+
+
                 root_dir = function(startpath)
                     local ts_root =
                         util.root_pattern("tsconfig.json", "jsconfig.json", "package.json")(
@@ -178,16 +196,6 @@ return {
             -- WSGL `cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer`
             lsp.wgsl_analyzer.setup({
                 capabilities = capabilities,
-            })
-
-            -- Rounded borders
-            vim.lsp.handlers["textDocument/hover"] =
-                vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-            vim.lsp.handlers["textDocument/signatureHelp"] =
-                vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
-            vim.diagnostic.config({
-                float = { border = "rounded" },
-                signs = true,
             })
         end,
         init = function()

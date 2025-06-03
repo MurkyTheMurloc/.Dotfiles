@@ -13,6 +13,7 @@ end
 
 -- Directories to skip
 local skip_dirs = {
+    [".astro"] = true,
     ["node_modules"] = true,
     [".git"] = true,
     [".svn"] = true,

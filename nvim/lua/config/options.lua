@@ -57,5 +57,13 @@ vim.cmd([[set filetype=on]]) -- Enable filetype detection
 vim.filetype.add({
     extension = {
         surql = 'surql', -- Maps `.surql` files to the `surql` filetype
+        astr = "astro"
     },
+})
+
+vim.api.nvim_create_autocmd("BufRead", {
+    pattern = "*.astro",
+    callback = function()
+        vim.bo.filetype = "astro"
+    end,
 })

@@ -41,3 +41,7 @@ local status, err = pcall(require, "config.re_open")
 if not status then
     vim.notify("Error loading config.re_open: " .. err, vim.log.levels.ERROR)
 end
+
+require("config.delete_pair_tags").setup()
+require("config.auto_closing_tags")
+--require("config.auto_delete_tag_pairs")
