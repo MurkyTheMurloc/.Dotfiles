@@ -50,6 +50,21 @@ return
         for group, conf in pairs(github_dark_dimmed) do
             vim.api.nvim_set_hl(0, group, conf)
         end
-        --vim.g.neovide_transparency = 0.7
+        vim.g.neovide_transparency = 0.8
+        local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
+        local gray = comment_hl.fg and string.format("#%06x", comment_hl.fg)
+
+        -- Apply it to FloatBorder globally
+        if gray then
+            vim.api.nvim_set_hl(0, "FloatBorder", { fg = gray, bg = "NONE" })
+            -- Optional: also update NormalFloat to be transparent
+            vim.api.nvim_set_hl(0, "NormalFloat", { fg = gray, bg = "NONE" })
+
+            vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = gray, link = "FloatBorder" })
+            vim.api.nvim_set_hl(0, "TelescopeSelection",
+                { bg = "NONE", fg = "NONE", bold = false, sp = gray, underline = true })
+            vim.api.nvim_set_hl(0, "PmenuSel",
+                { bg = "NONE", fg = "NONE", bold = false, underline = true, sp = gray })
+        end
     end,
 }

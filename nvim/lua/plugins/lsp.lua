@@ -52,13 +52,7 @@ return {
                 filetypes = { "css", "scss", "less" },
             })
 
-            vim.lsp.config("denols", {
-                cmd                 = { "deno", "lsp" },
-                filetypes           = { "typescript", "typescriptreact" },
-                root_markers        = { "deno.json", "deno.jsonc" }, -- strip out ".git"
-                single_file_support = false,
-                workspace_required  = true,
-            })
+
             -- Deno `brew:deno`
             lsp.denols.setup({
                 capabilities        = capabilities,
@@ -166,7 +160,16 @@ return {
             -- Rust `brew:rust-analyzer`
             lsp.rust_analyzer.setup({
                 capabilities = capabilities,
-                filetypes = { "rust" }
+                filetypes = { "rust" },
+                settings = {
+                    ["rust-analyzer"] = {
+                        cargo = { allFeatures = true },
+                        checkOnSave = { command = "clippy" },
+                    },
+                },
+                cmd = {
+                    "rustup", "run", "stable", "rust-analyzer",
+                }
 
 
             })

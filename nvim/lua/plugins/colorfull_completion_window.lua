@@ -71,6 +71,12 @@ return {
                     -- It is usually import path such as "os"
                     extra_info_hl = "@comment",
                 },
+                pylsp = {
+                    extra_info_hl = "@comment",
+                    -- Dim the function argument area, which is the main
+                    -- difference with pyright.
+                    arguments_hl = "@comment",
+                },
                 -- If true, try to highlight "not supported" languages.
                 fallback = true,
                 -- this will be applied to label description for unsupport languages
@@ -85,7 +91,9 @@ return {
             -- between 0 and 1, it'll be treated as percentage of the width of
             -- the window: math.floor(max_width * vim.api.nvim_win_get_width(0))
             -- Default 60.
-            max_width = 80,
+            max_width = 100,
+
+
         })
     end,
 }

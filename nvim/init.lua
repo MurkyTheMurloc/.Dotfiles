@@ -44,4 +44,5 @@ end
 
 require("config.delete_pair_tags").setup()
 require("config.auto_closing_tags")
+require("config.remove_duplicated_lsp").setup()
 --require("config.auto_delete_tag_pairs")
