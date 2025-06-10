@@ -1,47 +1,24 @@
--- Load options
-require("config.options")
-require("config.quit_pre")
+
+require("config.vim")
 local status, err = pcall(require, "config.delete_swap_files")
 if not status then
     vim.notify("Error loading config.delete_swap_files: " .. err, vim.log.levels.ERROR)
 end
-
-
-if vim.g.neovide then
-    require("neovide")
+local status, err = pcall(require, "config.quit_pre")
+if not status then
+    vim.notify("Error loading config.quit_pre: " .. err, vim.log.levels.ERROR)
 end
-
-
--- Bootstrap Lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
--- Load Lazy.nvim
-require("lazy").setup("plugins")
-
---require("config.smart_rename")
-require("keymaps.file_browser")
-require("keymaps.bindings")
-
-require("config.surreal_ql_lsp").setup()
-require("config.auto_save").setup({ interval = 3000 })
-
-
+--[[
 local status, err = pcall(require, "config.re_open")
 if not status then
     vim.notify("Error loading config.re_open: " .. err, vim.log.levels.ERROR)
 end
+]]
 
-require("config.delete_pair_tags").setup()
-require("config.auto_closing_tags")
---require("config.remove_duplicated_lsp").setup()
+--require("config.surql_lsp")
+require("config.lazy")
+require("config.diagnostic")
+
+if vim.g.neovide then require("config.neovide") end
+
+require("config.re_open")

@@ -1,4 +1,4 @@
-return
+return {
 {
     'projekt0n/github-nvim-theme',
     name = 'github-theme',
@@ -50,7 +50,7 @@ return
         for group, conf in pairs(github_dark_dimmed) do
             vim.api.nvim_set_hl(0, group, conf)
         end
-        vim.g.neovide_transparency = 0.8
+        --vim.g.neovide_transparency = 0.8
         local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
         local gray = comment_hl.fg and string.format("#%06x", comment_hl.fg)
 
@@ -67,4 +67,5 @@ return
                 { bg = "NONE", fg = "NONE", bold = false, underline = true, sp = gray })
         end
     end,
+}
 }

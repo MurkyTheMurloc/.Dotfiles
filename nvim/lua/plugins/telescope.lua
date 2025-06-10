@@ -1,12 +1,3 @@
-local project_root = vim.fn.systemlist('git rev-parse --show-toplevel')
-if #project_root == 0 then
-    project_root = vim.fn.getcwd()
-else
-    project_root = vim.fn.trim(project_root[1])
-end
-
-local search_dir = project_root .. "/packages/frontend"
-
 return {
     'nvim-telescope/telescope.nvim',
     lazy = "VeryLazy",

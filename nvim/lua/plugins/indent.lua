@@ -6,7 +6,7 @@ return {
 	---@type ibl.config
 	opts = {
 		indent = {
-            char = "│",
+			char = "│",
 			tab_char = "│", -- or "│", "▏", "▎"
 			highlight = {
 				"Whitespace",

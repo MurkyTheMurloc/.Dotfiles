@@ -1,6 +1,6 @@
 return {
-    "hinell/lsp-timeout.nvim",
-    dependencies = {
-        "neovim/nvim-lspconfig",
-    },
+	"hinell/lsp-timeout.nvim",
+	dependencies = {
+		"neovim/nvim-lspconfig",
+	},
 }
