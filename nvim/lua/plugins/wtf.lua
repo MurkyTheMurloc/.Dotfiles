@@ -4,9 +4,8 @@ return {
         "MunifTanjim/nui.nvim",
     },
     opts = {
-        openai_api_key =
-        "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",
-   openai_model_id = "gpt-4.5-turbo",
+        openai_api_key = "",
+        openai_model_id = "gpt-4.5-turbo",
     },
     keys = {
         {
