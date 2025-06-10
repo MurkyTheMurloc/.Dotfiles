@@ -8,6 +8,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
+
             local lsp = require("lspconfig")
             local util = require("lspconfig.util")
 
@@ -56,10 +57,15 @@ return {
             -- Deno `brew:deno`
             lsp.denols.setup({
                 capabilities        = capabilities,
-                filetypes           = { "typescript", "typescriptreact" },
                 single_file_support = false,
-                workspace_required  = true,
-                root_markers        = { "deno.json", "deno.jsonc" },
+                on_init             = function(client, init_result)
+                    -- if our root_dir function returned nil, bail out
+                    if not client.config.root_dir then
+                        vim.notify("stoping deno")
+
+                        client.stop()
+                    end
+                end,
                 root_dir            = function(startpath)
                     local deno_root = util.root_pattern("deno.json", "deno.jsonc")(startpath)
                     -- is there a deno.json?
@@ -75,7 +81,6 @@ return {
                     -- is there a tsconfig.json or package.json?
                     if not ts_root then
                         -- no tsconfig.json or package.json found -> enable denols
-                        --
                         return deno_root
                     end
                     if string.len(ts_root) > string.len(deno_root) then
@@ -86,6 +91,34 @@ return {
                     return deno_root
                 end,
             })
+            lsp.vtsls.setup({
+                capabilities = capabilities,
+                settings     = {
+                    completions = {
+                        completeFunctionCalls = true,
+                    },
+                },
+                on_init      = function(client, init_result)
+                    -- if our root_dir function returned nil, bail out
+                    if not client.config.root_dir then
+                        client.stop()
+                    end
+                end,
+                root_dir     = function(startpath)
+                    local ts_root =
+                        util.root_pattern("tsconfig.json", "jsconfig.json", "package.json")(
+                            startpath
+                        )
+                    if not ts_root then return nil end
+                    local deno_root = util.root_pattern("deno.json", "deno.jsonc")(startpath)
+                    if not deno_root then return ts_root end
+                    if string.len(deno_root) >= string.len(ts_root) then return nil end
+
+                    return ts_root
+                end,
+            })
+
+
 
 
             -- Docker `npm:dockerfile-language-server-nodejs`
@@ -174,27 +207,6 @@ return {
 
             })
 
-            -- TypeScript `npm:@vtsls/language-server`
-            lsp.vtsls.setup({
-                capabilities        = capabilities,
-                single_file_support = false, -- disable fallback single-file
-                workspace_required  = true,
-
-                filetypes           = { "typescript", "typescriptreact" },
-
-
-                root_dir = function(startpath)
-                    local ts_root =
-                        util.root_pattern("tsconfig.json", "jsconfig.json", "package.json")(
-                            startpath
-                        )
-                    if not ts_root then return nil end
-                    local deno_root = util.root_pattern("deno.json", "deno.jsonc")(startpath)
-                    if not deno_root then return ts_root end
-                    if string.len(deno_root) > string.len(ts_root) then return nil end
-                    return ts_root
-                end,
-            })
 
             -- WSGL `cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer`
             lsp.wgsl_analyzer.setup({
@@ -206,7 +218,7 @@ return {
                 desc = "LSP actions",
                 callback = function(event)
                     local opts = { buffer = event.buf }
-                    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+                    vim.keymap.set("n", "k", function() vim.lsp.buf.hover(float_opts) end, opts)
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
@@ -216,7 +228,6 @@ return {
                     vim.keymap.set("n", "g.", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
                     vim.keymap.set("n", "cd", vim.lsp.buf.rename, opts)
-                    vim.keymap.set({ "n", "x" }, "<F3>", vim.lsp.buf.format, opts)
                 end,
             })
         end,

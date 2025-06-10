@@ -32,7 +32,7 @@ return {
                 "tailwindcss", -- Tailwind CSS
                 "graphql",     -- GraphQL
                 "sqls",        -- SQL
-                "denols",      -- Deno
+                --                "denols",      -- Deno
                 "ltex",        -- Grammar
                 "dockerls",
                 "docker_compose_language_service",

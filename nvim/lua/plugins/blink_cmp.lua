@@ -1,4 +1,4 @@
-local function get_centered_position_with_padding(width, height, padding)
+--[[local function get_centered_position_with_padding(width, height, padding)
     local editor_width = vim.o.columns
     local editor_height = vim.o.lines
 
@@ -11,6 +11,7 @@ local function get_centered_position_with_padding(width, height, padding)
 
     return { row = row, col = col }
 end
+]]
 
 --[[
 return {
@@ -230,11 +231,19 @@ return {
             },
             "alexandre-abrioux/blink-cmp-npm.nvim",
             "erooke/blink-cmp-latex",
+            "L3MON4D3/LuaSnip",
+            "echasnovski/mini.icons"
 
         },
 
         version = "*.",
         opts = {
+
+            snippet = {
+                expand = function(args)
+                    require("luasnip").lsp_expand(args.body)
+                end,
+            },
             sources = {
                 default = { 'buffer', 'lsp', 'path', "snippets", "npm", "latex" },
                 per_filetype = {
@@ -299,13 +308,23 @@ return {
             appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = "mono", },
             signature = {
                 enabled = true,
-                direction_priority = {
-                    menu_north = { 'n', },
-                    menu_east = { "n" },
-                    menu_south = { "n" },
-                    menu_west = { "n" },
+                window = {
+
+                    winblend = vim.g.neovide and 50 or 0,
+                    max_width = 100,
+                    border = "rounded",
+                    scrollbar = false,
+                    direction_priority = {
+                        menu_north = { 'n', },
+                        menu_east = { "n" },
+                        menu_south = { "n" },
+                        menu_west = { "n" },
+                    },
+                    treesitter_highlighting = true,
+                    show_documentation = true,
                 },
             },
+
             fuzzy = { implementation = 'prefer_rust_with_warning', },
             completion = {
                 accept = {
@@ -342,6 +361,7 @@ return {
                 col_offset = -3,
 
                 documentation = {
+                    winblend = vim.g.neovide and 50 or 0,
                     treesitter_highlighting = true,
                     auto_show = true,
 
@@ -403,6 +423,19 @@ return {
                                 end,
                                 highlight = function(ctx)
                                     return require("colorful-menu").blink_components_highlight(ctx)
+                                end,
+                            },
+                            kind_icon = {
+                                ellipsis = false,
+                                text = function(ctx)
+                                    local kind_icon, _, _ =
+                                        require("mini.icons").get("lsp", ctx.kind)
+                                    return kind_icon
+                                end,
+                                -- Optionally, you may also use the highlights from mini.icons
+                                highlight = function(ctx)
+                                    local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+                                    return hl
                                 end,
                             },
                         },
