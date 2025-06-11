@@ -35,7 +35,7 @@ function M.delete_current_tag_pair()
 		return
 	end
 
-	local parser = parsers.get_parser(bufnr, lang)   -- Pass bufnr for buffer-specific parser if available
+	local parser = parsers.get_parser(bufnr, lang) -- Pass bufnr for buffer-specific parser if available
 	if not parser then
 		vim.notify("DeleteTagPair: Treesitter parser could not be loaded for language: " .. lang, vim.log.levels.WARN)
 		return
@@ -51,7 +51,7 @@ function M.delete_current_tag_pair()
 	local current_node_at_cursor = ts_utils.get_node_at_cursor()
 
 	if not current_node_at_cursor then
-		return     -- No Treesitter node at cursor, do nothing silently
+		return -- No Treesitter node at cursor, do nothing silently
 	end
 
 	-- Define query patterns for different languages/tag types
@@ -61,28 +61,28 @@ function M.delete_current_tag_pair()
 			self_closing_element = [[(self_closing_tag) @self_closing]],
 			comment = [[(comment) @comment]]
 		},
-		astro = {     -- Astro uses HTML syntax for tags primarily
+		astro = { -- Astro uses HTML syntax for tags primarily
 			element = [[(element (start_tag) @opening_tag (end_tag)? @closing_tag) @element]],
 			self_closing_element = [[(self_closing_tag) @self_closing]],
 			comment =
-			[[(comment) @comment]]       -- Astro comments .. [[(frontmatter) @comment]] -- Treat frontmatter as off-limits
+			[[(comment) @comment]] -- Astro comments .. [[(frontmatter) @comment]] -- Treat frontmatter as off-limits
 		},
-		typescriptreact = {            -- TSX/JSX
+		typescriptreact = {   -- TSX/JSX
 			element = [[(jsx_element (jsx_opening_element) @opening_tag (jsx_closing_element)? @closing_tag) @element]],
 			self_closing_element = [[(jsx_self_closing_element) @self_closing]],
-			comment = [[ [(comment) (string_fragment)] @comment ]]       -- string_fragment for template literal comments
+			comment = [[ [(comment) (string_fragment)] @comment ]] -- string_fragment for template literal comments
 		},
-		javascriptreact = {                                            -- JSX in JS files
+		javascriptreact = {                                   -- JSX in JS files
 			element = [[(jsx_element (jsx_opening_element) @opening_tag (jsx_closing_element)? @closing_tag) @element]],
 			self_closing_element = [[(jsx_self_closing_element) @self_closing]],
 			comment = [[ [(comment) (string_fragment)] @comment ]]
 		},
-		vue = {     -- Vue templates are similar to HTML
+		vue = { -- Vue templates are similar to HTML
 			element = [[(element (start_tag) @opening_tag (end_tag)? @closing_tag) @element]],
 			self_closing_element = [[(self_closing_tag) @self_closing]],
 			comment = [[(comment) @comment]]
 		},
-		svelte = {     -- Svelte templates are similar to HTML
+		svelte = { -- Svelte templates are similar to HTML
 			element = [[(element (start_tag) @opening_tag (end_tag)? @closing_tag) @element]],
 			self_closing_element = [[(self_closing_tag) @self_closing]],
 			comment = [[(comment) @comment]]
@@ -109,7 +109,7 @@ function M.delete_current_tag_pair()
 				cursor_col >= scol and cursor_col <= ecol
 	end
 
-	local cursor_pos_api = vim.api.nvim_win_get_cursor(0)   -- {row, col} 1-indexed
+	local cursor_pos_api = vim.api.nvim_win_get_cursor(0) -- {row, col} 1-indexed
 	local cursor_row_zero_based = cursor_pos_api[1] - 1
 	local cursor_col_zero_based = cursor_pos_api[2]
 
@@ -121,7 +121,7 @@ function M.delete_current_tag_pair()
 			for _, node, _ in comment_ts_query:iter_captures(root, bufnr, 0, -1) do
 				if is_cursor_in_node(node, cursor_row_zero_based, cursor_col_zero_based) then
 					-- vim.notify("DeleteTagPair: Cursor is inside a comment, no action.", vim.log.levels.INFO)
-					return           -- Do nothing if inside a comment
+					return -- Do nothing if inside a comment
 				end
 			end
 		end
@@ -142,7 +142,7 @@ function M.delete_current_tag_pair()
 				for _, node_capture, _ in query_sc:iter_captures(search_node_iter, bufnr) do
 					if is_cursor_in_node(node_capture, cursor_row_zero_based, cursor_col_zero_based) then
 						self_closing_tag_node = node_capture
-						goto process_tags             -- Jump to processing
+						goto process_tags -- Jump to processing
 					end
 				end
 			end
@@ -154,18 +154,18 @@ function M.delete_current_tag_pair()
 			if query_el then
 				for _, node_capture, _ in query_el:iter_captures(search_node_iter, bufnr) do
 					local capture_name = query_el.captures
-							[select(2, query_el:iter_captures(search_node_iter, bufnr, search_node_iter:start_row(), search_node_iter:end_row()))[select('#', query_el:iter_captures(search_node_iter, bufnr, search_node_iter:start_row(), search_node_iter:end_row())) - 1]]           -- Get name of last capture for the match
+							[select(2, query_el:iter_captures(search_node_iter, bufnr, search_node_iter:start_row(), search_node_iter:end_row()))[select('#', query_el:iter_captures(search_node_iter, bufnr, search_node_iter:start_row(), search_node_iter:end_row())) - 1]] -- Get name of last capture for the match
 
 					-- We are interested in the overall "@element" if cursor is within it
 					if query_el.captures[select(2, query_el:iter_captures(node_capture, bufnr, node_capture:start_row(), node_capture:end_row()))[select('#', query_el:iter_captures(node_capture, bufnr, node_capture:start_row(), node_capture:end_row())) - 1]] == "element" and is_cursor_in_node(node_capture, cursor_row_zero_based, cursor_col_zero_based) then
-						found_element_node = node_capture             -- This is the main <element>...</element> node
+						found_element_node = node_capture -- This is the main <element>...</element> node
 						break
 					end
 				end
 			end
 		end
 
-		if found_element_node then break end     -- Found the encompassing element
+		if found_element_node then break end -- Found the encompassing element
 		search_node_iter = search_node_iter:parent()
 	end
 
@@ -206,7 +206,7 @@ function M.delete_current_tag_pair()
 	end
 
 	local ranges_to_delete = {}
-	if closing_tag_node then   -- Closing tag is optional (e.g. void elements, or just not present)
+	if closing_tag_node then -- Closing tag is optional (e.g. void elements, or just not present)
 		table.insert(ranges_to_delete, get_node_range(closing_tag_node))
 	end
 	table.insert(ranges_to_delete, get_node_range(opening_tag_node))
@@ -233,7 +233,7 @@ end
 
 function M.setup(opts)
 	opts = opts or {}
-	local keymap = opts.keymap or "<leader>dt"
+	local keymap = opts.keymap or "dt"
 
 	vim.api.nvim_create_user_command(
 		'DeleteTagPair',

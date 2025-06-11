@@ -1,51 +1,71 @@
 local M = {}
 
--- Tags we should NOT auto-remove, even if they are made self-closing
-local skip_closing_removal = {
-	slot = true,
-	Fragment = true,
+-- tags we never auto-remove
+local skip = {
+	slot               = true,
+	Fragment           = true,
 	["astro-fragment"] = true,
-	head = true,
-	style = true,
+	head               = true,
+	style              = true,
 }
 
-local function extract_tag_name(tag_text)
-	return tag_text:match("<%s*/?%s*([%w:-]+)")
+-- strip off attributes and brackets, return bare name
+local function get_name(tag)
+	return tag:match("^</?%s*([%w:-]+)")
 end
 
-local function remove_closing_tag(bufnr, tag_name, start_row)
-	if skip_closing_removal[tag_name] then return end
+-- Given a buffer, a tag name, and the zero-based row where you just
+-- turned <Tag> into <Tag/>, scan forward and delete exactly the matching </Tag>.
+local function remove_matching_closer(bufnr, tag_name, self_row)
+	if skip[tag_name] then return end
 
-	local lines = vim.api.nvim_buf_get_lines(bufnr, start_row, -1, false)
-	local closing_tag_pattern = "</%s*" .. tag_name .. "%s*>"
+	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local depth = 0
+	-- scan from the line *after* your self-close:
+	for line_idx = self_row + 2, #lines do
+		local line = lines[line_idx]
 
-	for i, line in ipairs(lines) do
-		local line_number = start_row + i - 1
-		if line:match(closing_tag_pattern) then
-			local new_line = line:gsub(closing_tag_pattern, "", 1)
-			vim.api.nvim_buf_set_lines(bufnr, line_number, line_number + 1, false, { new_line })
-			break
+		-- count any new "<Tag ...>" openings (but not self-closing "<Tag/>")
+		for _ in line:gmatch("<%s*" .. tag_name .. "%s*[^/>]->") do
+			depth = depth + 1
+		end
+
+		-- look for a closing "</Tag>"
+		if line:find("</%s*" .. tag_name .. "%s*>") then
+			if depth == 0 then
+				-- this is *the* closer we want to delete
+				local cleaned = line:gsub("</%s*" .. tag_name .. "%s*>", "", 1)
+				vim.api.nvim_buf_set_lines(bufnr, line_idx - 1, line_idx, false, { cleaned })
+				return
+			else
+				-- that closer belonged to a nested opener; skip it
+				depth = depth - 1
+			end
 		end
 	end
 end
 
 function M.process_buffer()
 	local bufnr = vim.api.nvim_get_current_buf()
-	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-
-	for i, line in ipairs(lines) do
+	local all = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	for idx, line in ipairs(all) do
+		-- for each self-closing "<Tag .../>" on this line:
 		for tag in line:gmatch("<%s*[%w:-]+.-/>") do
-			local tag_name = extract_tag_name(tag)
-			if tag_name then
-				remove_closing_tag(bufnr, tag_name, i - 1)
+			local name = get_name(tag)
+			if name then
+				remove_matching_closer(bufnr, name, idx - 1)
 			end
 		end
 	end
 end
 
-vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+vim.api.nvim_create_autocmd("InsertLeave", {
 	pattern = { "*.html", "*.jsx", "*.tsx", "*.astro" },
 	callback = function()
+		local line = vim.api.nvim_get_current_line()
+		if not line:match("/>%s*$") then
+			return
+		end
 		M.process_buffer()
 	end,
 })

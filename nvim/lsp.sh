@@ -27,13 +27,15 @@ else
     echo "Installing linting (provides biome)..."
     brew install biome
 fi
-if command_exists eslint: then
+
+
+if command_exists eslint; then
   echo "eslint is already installed."
 else 
   echo "Installing linting (provides eslint)..."
   brew install eslint_d
 fi
-if command_exists prettier: then
+if command_exists prettier; then
   echo "prettierd is already installed."
 else 
   echo "Installing linting (provides prettierd)..."
@@ -89,8 +91,8 @@ fi
 echo "Checking and installing npm packages..."
 
 # Ensure npm is installed
-if ! command_exists npm; then
-    echo "Error: npm is not installed. Please install Node.js and npm first."
+if ! command_exists pnpm; then
+    echo "Error: pnpm is not installed. Please install Node.js and npm first."
     exit 1
 fi
 

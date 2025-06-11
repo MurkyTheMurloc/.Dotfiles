@@ -54,8 +54,15 @@ vim.filetype.add({
 vim.filetype.add({
 	extension = {
 		surql = 'surql', -- Maps `.surql` files to the `surql` filetype
-		astr = "astro"
+		astro = "astro"
 	},
+})
+
+vim.api.nvim_create_autocmd("BufRead", {
+	pattern = "*.astro",
+	callback = function()
+		vim.bo.filetype = "astro"
+	end,
 })
 vim.keymap.set("n", "<leader>w", vim.cmd.write, { desc = "Write" })
 
