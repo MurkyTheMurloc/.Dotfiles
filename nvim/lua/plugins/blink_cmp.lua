@@ -2,7 +2,7 @@ return {
 	{
 		'saghen/blink.cmp',
 		event = { "InsertEnter" },
-		lazy = false,
+		lazy = true,
 		dependencies = {
 			"xzbdmw/colorful-menu.nvim",
 			"Fildo7525/pretty_hover",
@@ -68,24 +68,20 @@ return {
 			},
 			appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = "mono" },
 			signature = {
-				enabled = true,
+				enabled = false,
 				window = {
 					winblend = vim.g.neovide and 50 or 0,
-					max_width = 100,
+					max_width = 80,
 					border = "rounded",
 					scrollbar = false,
-					direction_priority = {
-						menu_north = { 'n' },
-						menu_east = { "n" },
-						menu_south = { "n" },
-						menu_west = { "n" },
-					},
+					--direction_priority = { 'n' },
 					treesitter_highlighting = true,
 					show_documentation = true,
 				},
 			},
 			fuzzy = { implementation = 'prefer_rust_with_warning' },
 			completion = {
+
 				accept = {
 					dot_repeat = true,
 					create_undo_point = true,
@@ -105,29 +101,28 @@ return {
 						},
 					},
 				},
-				col_offset = -3,
+				list = {
+					selection = {
+						preselect = true, auto_insert = true
+					},
+				},
 				documentation = {
-					winblend = vim.g.neovide and 50 or 0,
 					treesitter_highlighting = true,
 					auto_show = true,
 					auto_show_delay_ms = 1,
 					update_delay_ms = 50,
 					window = {
 						scrollbar = false,
-						min_width = 104,
-						max_width = 104,
+						min_width = 80,
+						max_width = 80,
 						border = "rounded",
-						win_config = {
-							override = function(default_config)
-								default_config.col = 0
-								return default_config
-							end,
-						},
+
 						direction_priority = {
 							menu_north = { 'n' },
-							menu_east = { "n" },
-							menu_south = { "n" },
-							menu_west = { "n" },
+							menu_south = { 'n' },
+							--menu_west = { 'n' },
+							--menu_east = { 'n' },
+
 						},
 					},
 					draw = function(opts)
@@ -139,16 +134,16 @@ return {
 					end,
 				},
 				menu = {
-					min_width = 100,
-					max_width = 100,
+					min_width = 80,
 					border = "rounded",
-					treesitter_highlighting = true,
 					scrollbar = false,
+					direction_priority = { 's' },
 					draw = {
+						treesitter = { "lsp" },
 						columns = { { "kind_icon" }, { "label" } },
 						components = {
 							label = {
-								width = { max = 100, min = 100 },
+								width = { max = 80, min = 80 },
 								text = function(ctx)
 									return require("colorful-menu").blink_components_text(ctx)
 								end,

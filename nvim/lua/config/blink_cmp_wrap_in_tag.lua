@@ -2,6 +2,12 @@ local fuzzy = require("blink.cmp.fuzzy")
 local utils = require("blink.cmp.lib.utils")
 local type = require('blink.cmp.types').CompletionItemKind
 
+local lsp_source = require("blink.cmp.sources.lsp") -- blink's official LSP source
+local lsp = lsp_source
+
+
+
+
 local ts_utils = require("nvim-treesitter.ts_utils")
 
 
@@ -236,104 +242,44 @@ end
 --function source:get_trigger_characters() return { '<' } end
 
 function source:get_completions(ctx, callback)
-	local bufnr    = ctx.bufnr
-	local row, col = ctx.cursor[1] - 1, ctx.cursor[2]
-	local line     = ctx.line or ctx.get_line()
-	local params   = { textDocument = { uri = vim.uri_from_bufnr(bufnr) }, position = { line = row, character = col } }
+	lsp:get_completions(ctx, function(result)
+		local items = result.items or {}
 
+		local extended_items = {}
 
-	vim.lsp.buf_request(bufnr, "textDocument/completion", params, function(err, result)
-		if err or not result then
-			return callback({ items = {}, is_incomplete = false })
-		end
+		for _, item in ipairs(items) do
+			table.insert(extended_items, item)
 
-		-- Normalize to flat list
-		local raw = {}
-		if vim.islist(result) then
-			vim.list_extend(raw, result)
-		elseif result.items then
-			vim.list_extend(raw, result.items)
-		end
-
-		-- 3) decorate each raw item into a blink.cmp.CompletionItem
-		for i, item in ipairs(raw) do
-			raw[i] = vim.tbl_extend("force", {
-				source_name   = "lsp",
-				source_id     = "lsp",
-				cursor_column = col,
-			}, item)
-		end
-		local haystacks_by_provider = {
-			lsp = raw,
-		}
-
-
-		-- you can pass `nil` for range and blink will default to matching the whole word
-		local scored = fuzzy.fuzzy(line, col, haystacks_by_provider, "full")
-
-
-		local top_10 = {}
-
-
-		for i = 1, math.min(5, #scored) do
-			table.insert(top_10, scored[i])
-			local deep_copy = utils.shallow_copy(scored[i])
-			local label = deep_copy.label
+			local label = item.label
 			if HTML_TAGS[label] or label:match("^[A-Z]") or label:match("<>") then
-				deep_copy.label      = "wrap inside " .. label
-				deep_copy.filterText = label
-				deep_copy.sortText   = label
-				deep_copy.score      = deep_copy.score - 1
-				deep_copy.kind       = type.Function
-				deep_copy.data       = { wrap_tag = label }
-				table.insert(top_10, deep_copy)
+				local wrap_item = vim.deepcopy(item)
+				wrap_item.label = "wrap inside " .. label
+				wrap_item.insertText = label
+				wrap_item.filterText = label
+				wrap_item.sortText = label
+				wrap_item.score = (wrap_item.score or 0) - 1
+				wrap_item.kind = type.Function
+				wrap_item.data = { wrap_tag = label }
+				table.insert(extended_items, wrap_item)
 			end
 		end
 
-		return callback({
-			items = top_10,
-			-- Whether blink.cmp should request items when deleting characters
-			-- from the keyword (i.e. "foo|" -> "fo|")
-			-- Note that any non-alphanumeric characters will always request
-			-- new items (excluding `-` and `_`)
-			is_incomplete_backward = false,
-			-- Whether blink.cmp should request items when adding characters
-			-- to the keyword (i.e. "fo|" -> "foo|")
-			-- Note that any non-alphanumeric characters will always request
-			-- new items (excluding `-` and `_`)
-			is_incomplete_forward = false,
+		callback({
+			items = extended_items,
+			is_incomplete_backward = result.is_incomplete_backward,
+			is_incomplete_forward = result.is_incomplete_forward,
 		})
-
-		-- The callback _MUST_ be called at least once. The first time it's called,
-		-- blink.cmp will show the results in the completion menu. Subsequent calls
-		-- will append the results to the menu to support streaming results.
 	end)
-
-
-
-
-	-- (Optional) Return a function which cancels the request
-	-- If you have long running requests, it's essential you support cancellation
-	return function() end
 end
 
--- (Optional) Before accepting the item or showing documentation, blink.cmp will call this function
--- so you may avoid calculating expensive fields (i.e. documentation) for only when they're actually needed
 function source:resolve(item, callback)
-	item = vim.deepcopy(item)
+	if lsp.resolve then
+		lsp:resolve(item, callback)
+	else
+		callback(item)
+	end
+end -- Called immediately after applying the item's textEdit/insertText
 
-	-- Shown in the documentation window (<C-space> when menu open by default)
-	item.documentation = {
-		kind = 'markdown',
-		value = '# Foo\n\nBar',
-	}
-
-
-
-	callback(item)
-end
-
--- Called immediately after applying the item's textEdit/insertText
 function source:execute(ctx, item, callback, default_implementation)
 	-- By default, your source must handle the execution of the item itself,
 	-- but you may use the default implementation at any time
@@ -349,7 +295,6 @@ function source:execute(ctx, item, callback, default_implementation)
 		if success then
 
 		else
-			vim.notify("default")
 			default_implementation(ctx, item)
 		end
 	else

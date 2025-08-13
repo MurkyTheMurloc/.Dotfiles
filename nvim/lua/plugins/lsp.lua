@@ -1,6 +1,30 @@
 -- TODO: Keymap
 
 
+
+local function find_root_iterative(startpath)
+	local path = vim.fs.dirname(startpath) and startpath or vim.fs.dirname(startpath)
+
+	while path do
+		-- Prüfe ob tsconfig.json oder package.json im aktuellen Verzeichnis sind
+		local has_tsconfig = vim.uv.fs_stat(table.concat(path, "tsconfig.json"))
+		local has_package = vim.uv.fs_stat(table.concat(path, "package.json"))
+
+		if has_tsconfig or has_package then
+			return path
+		end
+
+		local parent = vim.fs.dirname(path)
+		if parent == path then -- erreicht Root-Verzeichnis
+			vim.notify("path: " .. path)
+			break
+		end
+		path = parent
+	end
+
+	vim.notify("path: " .. path)
+	return nil
+end
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -35,16 +59,22 @@ return {
 					return util.root_pattern("package.json", "deno.jsonc", "tailwind.css")(fname)
 				end
 			})
+			lsp.graphql.setup({
+				cmd = { "graphql-lsp", "server", "-m", "stream" },
+				filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript", "javascript" },
+				root_dir = require('lspconfig').util.root_pattern(".graphqlrc*", ".graphql.config.*", "package.json"),
+			})
+
 			lsp.ltex.setup({
 				settings = {
 					ltex = {
-						language = "en",                         -- Set the grammar language to English
+						language = "en",    -- Set the grammar language to English
 						additionalRules = {
-							enablePickyRules = true,               -- Enable more advanced grammar rules
+							enablePickyRules = true, -- Enable more advanced grammar rules
 						},
 					},
 				},
-				capabilities = capabilities,         -- Include Blink.cmp capabilities
+				capabilities = capabilities, -- Include Blink.cmp capabilities
 			})
 
 			-- CSS `npm:vscode-langservers-extracted`
@@ -114,7 +144,7 @@ return {
 					if not deno_root then return ts_root end
 					if string.len(deno_root) >= string.len(ts_root) then return nil end
 
-					return ts_root
+					return find_root_iterative(vim.api.nvim_buf_get_name(0))
 				end,
 			})
 
@@ -218,8 +248,10 @@ return {
 				desc = "LSP actions",
 				callback = function(event)
 					local opts = { buffer = event.buf }
-					vim.keymap.set("n", "k", function() vim.lsp.buf.hover(float_opts) end, opts)
+					--vim.keymap.set("n", "k", function() vim.lsp.buf.hover(float_opts) end, opts)
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+
+					vim.keymap.set("n", "gb", "<C-o>", opts)
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 					vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)

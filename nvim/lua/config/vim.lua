@@ -2,7 +2,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.opt.number = true
-vim.opt.relativenumber = true
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
@@ -17,6 +16,8 @@ vim.opt.listchars = {
 
 -- Do not break long lines
 vim.opt.wrap = false
+
+
 
 -- Sync with system clipboard
 vim.opt.clipboard = "unnamedplus"

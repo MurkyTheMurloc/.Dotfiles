@@ -24,4 +24,5 @@ require("config.re_open")
 
 require("config.auto_closing_tags")
 require("config.delete_paired_tags").setup()
-require("config.blink_cmp_wrap_in_tag")
+--require("config.blink_cmp_wrap_in_tag")
+require("config.smart_auto_reload")

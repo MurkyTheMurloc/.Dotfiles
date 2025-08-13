@@ -58,6 +58,8 @@ else
     brew install go
 fi
 
+
+
 # Lua Language Server
 if command_exists lua-language-server; then
     echo "lua-language-server is already installed."
@@ -96,6 +98,14 @@ if ! command_exists pnpm; then
     exit 1
 fi
 
+
+# GraphQL Language Server
+if command -v graphql-lsp >/dev/null 2>&1; then
+    echo "graphql-lsp is already installed."
+else
+    echo "Installing graphql-lsp..."
+    pnpm add -g install graphql-language-service-cli
+fi
 # Astro Language Server
 if pnpm list -g @astrojs/language-server >/dev/null 2>&1; then
     echo "@astrojs/language-server is already installed."
