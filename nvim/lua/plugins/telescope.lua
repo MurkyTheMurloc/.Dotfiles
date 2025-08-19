@@ -6,7 +6,7 @@ return {
 		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 		'nvim-telescope/telescope-frecency.nvim',
 		'neovim/nvim-lspconfig',
-		'rcarriga/nvim-notify',     -- Add notify as a dependency
+		'rcarriga/nvim-notify', -- Add notify as a dependency
 		"nvim-tree/nvim-web-devicons",
 	},
 	keys = {
@@ -47,7 +47,7 @@ return {
 		-- Load extensions
 		telescope.load_extension("fzf")
 		telescope.load_extension("frecency")
-		telescope.load_extension("notify")     -- Load notify extension
+		telescope.load_extension("notify") -- Load notify extension
 
 
 

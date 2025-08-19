@@ -65,6 +65,15 @@ return {
 				root_dir = require('lspconfig').util.root_pattern(".graphqlrc*", ".graphql.config.*", "package.json"),
 			})
 
+
+			-- Nix `nil`
+			lsp.nil_ls.setup({
+				capabilities = capabilities,
+			})
+
+			lsp.nushell.setup({
+				capabilities = capabilities,
+			})
 			lsp.ltex.setup({
 				settings = {
 					ltex = {
@@ -144,7 +153,8 @@ return {
 					if not deno_root then return ts_root end
 					if string.len(deno_root) >= string.len(ts_root) then return nil end
 
-					return find_root_iterative(vim.api.nvim_buf_get_name(0))
+					--return find_root_iterative(vim.api.nvim_buf_get_name(0))
+					return ts_root
 				end,
 			})
 

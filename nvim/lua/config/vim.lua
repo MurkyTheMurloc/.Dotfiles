@@ -98,7 +98,7 @@ local opts = { noremap = true, silent = true }
 
 vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>h', ':split<CR>', opts)
-
+vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end, { desc = "Structural Replace" })
 -- Set working directory when launching NeoVim
 -- local group_cdpwd = vim.api.nvim_create_augroup("cdpwd", { clear = true })
 -- vim.api.nvim_create_autocmd("VimEnter", {
