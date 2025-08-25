@@ -18,7 +18,7 @@ return {
 		local linter_config_files = {
 			biomejs = { "biome.json", "biome.jsonc" },
 			deno = { "deno.json", "deno.jsonc" },
-			eslint_d = { ".eslintrc.json", ".eslintrc.js", "eslint.config.js", "eslint.config.ts", }
+			eslint_d = { ".eslintrc.json", ".eslintrc.js", "eslint.config.js", "eslint.config.ts" }
 		}
 
 		local function has_config_file(config_names)
@@ -118,7 +118,7 @@ return {
 		-- Nach der Zeile, wo du eslint_d.fix definierst:
 
 		local lint_augroup = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
-		vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
+		vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
 			group = lint_augroup,
 			callback = function()
 				lint.try_lint()
