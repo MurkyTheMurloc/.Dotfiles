@@ -17,7 +17,6 @@ return {
 			},
 			mini = {
 				enabled = true,
-				indentscope_color = "",
 			},
 			native_lsp = {
 				enabled = true,
