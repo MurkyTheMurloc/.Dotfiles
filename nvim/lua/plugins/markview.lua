@@ -1,7 +1,7 @@
 -- For `plugins/markview.lua` users.
 return {
 	"OXY2DEV/markview.nvim",
-	lazy = false,
+	lazy = true,
 
 	-- For `nvim-treesitter` users.
 	priority = 49,

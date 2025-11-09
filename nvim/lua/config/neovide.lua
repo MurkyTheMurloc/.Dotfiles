@@ -16,3 +16,7 @@ vim.opt.winblend = 50
 vim.opt.pumblend = 50
 
 vim.g.neovide_underline_stroke_scale = 2
+if vim.g.neovide then
+	vim.g.neovide_opacity = 0.7
+	vim.g.transparency = 0.7
+end

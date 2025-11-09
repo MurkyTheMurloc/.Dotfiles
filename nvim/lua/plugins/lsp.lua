@@ -65,6 +65,11 @@ return {
 				root_dir = require('lspconfig').util.root_pattern(".graphqlrc*", ".graphql.config.*", "package.json"),
 			})
 
+			--markdown
+			lsp.markdown_oxide.setup({
+				capabilities = capabilities,
+				filetypes    = { "md", "mdx" },
+			})
 
 			-- Nix `nil`
 			lsp.nil_ls.setup({

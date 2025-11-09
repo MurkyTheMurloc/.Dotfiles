@@ -2,7 +2,7 @@ return {
 	{
 		'saghen/blink.cmp',
 		event = { "InsertEnter" },
-		lazy = true,
+		lazy = false,
 		dependencies = {
 			"xzbdmw/colorful-menu.nvim",
 			"Fildo7525/pretty_hover",
@@ -11,21 +11,27 @@ return {
 				dependencies = { "nvim-lua/plenary.nvim" },
 			},
 			"alexandre-abrioux/blink-cmp-npm.nvim",
+			--	'Kaiser-Yang/blink-cmp-git',
 			"erooke/blink-cmp-latex",
 			"echasnovski/mini.icons",
 		},
 		version = "1.*",
 		opts = {
 			sources = {
-				default = { 'buffer', 'lsp', 'path', "snippets", "npm", "latex" },
+				default = { "buffer", 'lsp', 'path', 'dictionary', "snippets", "npm", "latex", },
 				per_filetype = {
-					html = { 'tagwrap' },
-					astro = { 'tagwrap' },
-					typescriptreact = { 'tagwrap' },
+					--	html = { 'tagwrap' },
+					--	astro = { 'tagwrap' },
+					--	typescriptreact = { 'tagwrap' },
 					json = { "npm" },
 					latex = { "latex" },
 				},
 				providers = {
+					--	git = {
+					--		module = 'blink-cmp-git',
+					--		name = 'Git',
+					--	},
+
 					latex = {
 						name = "Latex",
 						module = "blink-cmp-latex",
@@ -33,10 +39,10 @@ return {
 							insert_command = false,
 						},
 					},
-					tagwrap = {
-						name = "tags",
-						module = "config.blink_cmp_wrap_in_tag",
-					},
+					--tagwrap = {
+					--	name = "tags",
+					--	module = "config.blink_cmp_wrap_in_tag",
+					--},
 					npm = {
 						name = "npm",
 						module = "blink-cmp-npm",
@@ -68,13 +74,11 @@ return {
 			},
 			appearance = { use_nvim_cmp_as_default = true, nerd_font_variant = "mono" },
 			signature = {
-				enabled = false,
+				enabled = true,
 				window = {
 					winblend = vim.g.neovide and 50 or 0,
-					max_width = 80,
 					border = "rounded",
 					scrollbar = false,
-					--direction_priority = { 'n' },
 					treesitter_highlighting = true,
 					show_documentation = true,
 				},
@@ -113,17 +117,9 @@ return {
 					update_delay_ms = 50,
 					window = {
 						scrollbar = false,
-						min_width = 80,
-						max_width = 80,
 						border = "rounded",
 
-						direction_priority = {
-							menu_north = { 'n' },
-							menu_south = { 'n' },
-							--menu_west = { 'n' },
-							--menu_east = { 'n' },
 
-						},
 					},
 					draw = function(opts)
 						if opts.item and opts.item.documentation then

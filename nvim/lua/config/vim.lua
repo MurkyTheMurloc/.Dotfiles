@@ -67,7 +67,7 @@ vim.api.nvim_create_autocmd("BufRead", {
 })
 vim.keymap.set("n", "<leader>w", vim.cmd.write, { desc = "Write" })
 
-vim.opt.guifont = "JetBrains Mono:h15"
+vim.opt.guifont = "JetBrains Mono:h18"
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
