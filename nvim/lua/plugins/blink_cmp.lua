@@ -6,10 +6,10 @@ return {
 		dependencies = {
 			"xzbdmw/colorful-menu.nvim",
 			"Fildo7525/pretty_hover",
-			{
-				"Kaiser-Yang/blink-cmp-dictionary",
-				dependencies = { "nvim-lua/plenary.nvim" },
-			},
+			-- {
+			-- 	"Kaiser-Yang/blink-cmp-dictionary",
+			-- 	dependencies = { "nvim-lua/plenary.nvim" },
+			-- },
 			"alexandre-abrioux/blink-cmp-npm.nvim",
 			--	'Kaiser-Yang/blink-cmp-git',
 			"erooke/blink-cmp-latex",
@@ -18,7 +18,7 @@ return {
 		version = "1.*",
 		opts = {
 			sources = {
-				default = { "buffer", 'lsp', 'path', 'dictionary', "snippets", "npm", "latex", },
+				default = { "buffer", 'lsp', 'path', "snippets", "npm", "latex", },
 				per_filetype = {
 					--	html = { 'tagwrap' },
 					--	astro = { 'tagwrap' },
@@ -54,14 +54,14 @@ return {
 							only_latest_version = false,
 						},
 					},
-					dictionary = {
-						module = "blink-cmp-dictionary",
-						name = "Dict",
-						min_keyword_length = 3,
-						opts = {
-							dictionary_files = { vim.fn.expand("~/.config/nvim/dictionary/words.dict") },
-						},
-					},
+					-- dictionary = {
+					-- 	module = "blink-cmp-dictionary",
+					-- 	name = "Dict",
+					-- 	min_keyword_length = 3,
+					-- 	opts = {
+					-- 		dictionary_files = { vim.fn.expand("~/.config/nvim/dictionary/words.dict") },
+					-- 	},
+					-- },
 				},
 			},
 			keymap = {

@@ -1,9 +1,11 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+
 		branch = 'master',
 		lazy = false,
 		build = ":TSUpdate",
+		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				highlight = { enable = true },
@@ -13,14 +15,14 @@ return {
 						enable = true,
 						lookahead = true,
 						keymaps = {
-							-- ["ao"] = {
-							-- 	query = { "@block.outer", "@conditional.outer", "@loop.outer" },
-							-- 	desc = "Select Outer Block",
-							-- },
-							-- ["io"] = {
-							-- 	query = { "@block.outer", "@conditional.outer", "@loop.outer" },
-							-- 	desc = "Select Inner Block",
-							-- },
+							["ao"] = {
+								query = { "@block.outer", "@conditional.outer", "@loop.outer" },
+								desc = "Select Outer Block",
+							},
+							["io"] = {
+								query = { "@block.outer", "@conditional.outer", "@loop.outer" },
+								desc = "Select Inner Block",
+							},
 							["am"] = { query = "@function.outer", desc = "Select Outer Function" },
 							["im"] = { query = "@function.inner", desc = "Select Inner Function" },
 							["af"] = { query = "@function.outer", desc = "Select Outer Function" },

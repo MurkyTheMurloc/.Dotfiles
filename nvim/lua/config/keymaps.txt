@@ -1,0 +1,196 @@
+=== unknown ===
+[n][normal][unknown]  sp -> 
+[n][normal][unknown]  ef -> 
+[n][normal][unknown]  ee -> 
+[n][normal][unknown]  ec -> 
+[n][normal][unknown]  tt -> 
+[n][normal][unknown]  tE -> 
+[n][normal][unknown]  te -> 
+[n][normal][unknown]  f. -> 
+[n][normal][unknown]  fu -> 
+[n][normal][unknown]  fn -> 
+[n][normal][unknown]  fT -> 
+[n][normal][unknown]  ft -> 
+[n][normal][unknown]  fr -> 
+[n][normal][unknown]  fS -> 
+[n][normal][unknown]  fs -> 
+[n][normal][unknown]  fA -> 
+[n][normal][unknown]  fD -> 
+[n][normal][unknown]  fd -> 
+[n][normal][unknown]  fc -> 
+[n][normal][unknown]  fg -> 
+[n][normal][unknown]  ff -> 
+[n][normal][unknown]  fb -> 
+[n][normal][unknown]  un -> 
+[n][normal][unknown]  wg -> 
+[n][normal][unknown]  wh -> 
+[n][normal][unknown]  ws -> 
+[n][normal][unknown]  k -> 
+[n][normal][unknown]  sr -> 
+[n][normal][unknown]  h -> :split<CR>
+[n][normal][unknown]  v -> :vsplit<CR>
+[n][normal][unknown]  w -> 
+[n][motion][unknown] % -> <Plug>(MatchitNormalForward)
+[n][normal][unknown] & -> :&&<CR>
+[n][normal][unknown] K -> 
+[n][normal][unknown] S -> 
+[n][normal][unknown] Y -> y$
+[n][normal][unknown] [% -> <Plug>(MatchitNormalMultiBackward)
+[n][normal][unknown] [[ -> 
+[n][normal][unknown] [  -> 
+[n][normal][unknown] [B -> 
+[n][normal][unknown] [b -> 
+[n][normal][unknown] [<C-T> -> 
+[n][normal][unknown] [T -> 
+[n][normal][unknown] [t -> 
+[n][normal][unknown] [A -> 
+[n][normal][unknown] [a -> 
+[n][normal][unknown] [<C-L> -> 
+[n][normal][unknown] [L -> 
+[n][normal][unknown] [l -> 
+[n][normal][unknown] [<C-Q> -> 
+[n][normal][unknown] [Q -> 
+[n][normal][unknown] [q -> 
+[n][normal][unknown] [D -> 
+[n][normal][unknown] [d -> 
+[n][normal][unknown] ]% -> <Plug>(MatchitNormalMultiForward)
+[n][normal][unknown] ]] -> 
+[n][normal][unknown] ]  -> 
+[n][normal][unknown] ]B -> 
+[n][normal][unknown] ]b -> 
+[n][normal][unknown] ]<C-T> -> 
+[n][normal][unknown] ]T -> 
+[n][normal][unknown] ]t -> 
+[n][normal][unknown] ]A -> 
+[n][normal][unknown] ]a -> 
+[n][normal][unknown] ]<C-L> -> 
+[n][normal][unknown] ]L -> 
+[n][normal][unknown] ]l -> 
+[n][normal][unknown] ]<C-Q> -> 
+[n][normal][unknown] ]Q -> 
+[n][normal][unknown] ]q -> 
+[n][normal][unknown] ]D -> 
+[n][normal][unknown] ]d -> 
+[n][motion][unknown] b -> 
+[n][normal][unknown] da<lt>> -> da<lt>
+[n][normal][unknown] da() -> da(
+[n][normal][unknown] da{} -> da{
+[n][normal][unknown] da[] -> da[
+[n][normal][unknown] di<lt>> -> di<lt>
+[n][normal][unknown] di() -> di(
+[n][normal][unknown] di{} -> di{
+[n][normal][unknown] di[] -> di[
+[n][motion][unknown] e -> 
+[n][normal][unknown] gh -> 
+[n][normal][unknown] g% -> <Plug>(MatchitNormalBackward)
+[n][normal][unknown] gO -> 
+[n][normal][unknown] grt -> 
+[n][normal][unknown] gri -> 
+[n][normal][unknown] grr -> 
+[n][normal][unknown] gra -> 
+[n][normal][unknown] grn -> 
+[n][normal][unknown] gcc -> 
+[n][normal][unknown] gc -> 
+[n][normal][unknown] gx -> 
+[n][normal][unknown] s -> 
+[n][normal][unknown] va<lt>> -> va<lt>
+[n][normal][unknown] va() -> va(
+[n][normal][unknown] va{} -> va{
+[n][normal][unknown] va[] -> va[
+[n][normal][unknown] vi<lt>> -> vi<lt>
+[n][normal][unknown] vi() -> vi(
+[n][normal][unknown] vi{} -> vi{
+[n][normal][unknown] vi[] -> vi[
+[n][motion][unknown] w -> 
+[n][normal][unknown] <Plug>(MatchitNormalMultiForward) -> :<C-U>call matchit#MultiMatch("W",  "n")<CR>
+[n][normal][unknown] <Plug>(MatchitNormalMultiBackward) -> :<C-U>call matchit#MultiMatch("bW", "n")<CR>
+[n][normal][unknown] <Plug>(MatchitNormalBackward) -> :<C-U>call matchit#Match_wrapper('',0,'n')<CR>
+[n][normal][unknown] <Plug>(MatchitNormalForward) -> :<C-U>call matchit#Match_wrapper('',1,'n')<CR>
+[n][normal][unknown] <C-X> -> 
+[n][normal][unknown] <C-A> -> 
+[n][normal][unknown] <Plug>PlenaryTestFile -> :lua require('plenary.test_harness').test_file(vim.fn.expand("%:p"))<CR>
+[n][normal][unknown] <C-W><C-D> -> <C-W>d
+[n][normal][unknown] <C-W>d -> 
+[n][normal][unknown] <C-L> -> <Cmd>nohlsearch|diffupdate|normal! <C-L><CR>
+[n][normal][unknown] <D-q> -> 
+[i][normal][unknown] <S-Tab> -> 
+[i][normal][unknown] <C-S> -> 
+[i][normal][unknown] <C-W> -> <C-G>u<C-W>
+[i][normal][unknown] <C-U> -> <C-G>u<C-U>
+[i][normal][unknown] <D-q> -> 
+[i][normal][unknown] <Tab> -> 
+[v][normal][unknown] <Tab> -> 
+[v][normal][unknown]  k -> 
+[v][normal][unknown]  sr -> 
+[v][normal][unknown] # -> 
+[v][motion][unknown] % -> <Plug>(MatchitVisualForward)
+[v][normal][unknown] * -> 
+[v][normal][unknown] @ -> mode() ==# 'V' ? ':normal! @'.getcharstr().'<CR>' : '@'
+[v][normal][unknown] Q -> mode() ==# 'V' ? ':normal! @<C-R>=reg_recorded()<CR><CR>' : 'Q'
+[v][normal][unknown] R -> 
+[v][normal][unknown] S -> 
+[v][normal][unknown] [% -> <Plug>(MatchitVisualMultiBackward)
+[v][normal][unknown] ]% -> <Plug>(MatchitVisualMultiForward)
+[v][normal][unknown] a% -> <Plug>(MatchitVisualTextObject)
+[v][motion][unknown] b -> 
+[v][motion][unknown] e -> 
+[v][normal][unknown] g% -> <Plug>(MatchitVisualBackward)
+[v][normal][unknown] gra -> 
+[v][normal][unknown] gc -> 
+[v][normal][unknown] gx -> 
+[v][normal][unknown] s -> 
+[v][motion][unknown] w -> 
+[v][normal][unknown] <Plug>(MatchitVisualTextObject) -> <Plug>(MatchitVisualMultiBackward)o<Plug>(MatchitVisualMultiForward)
+[v][normal][unknown] <Plug>(MatchitVisualMultiForward) -> :<C-U>call matchit#MultiMatch("W",  "n")<CR>m'gv``
+[v][normal][unknown] <Plug>(MatchitVisualMultiBackward) -> :<C-U>call matchit#MultiMatch("bW", "n")<CR>m'gv``
+[v][normal][unknown] <Plug>(MatchitVisualBackward) -> :<C-U>call matchit#Match_wrapper('',0,'v')<CR>m'gv``
+[v][normal][unknown] <Plug>(MatchitVisualForward) -> :<C-U>call matchit#Match_wrapper('',1,'v')<CR>:if col("''") != col("$") | exe ":normal! m'" | endif<CR>gv``
+[v][normal][unknown] <S-Tab> -> 
+[v][normal][unknown] <C-S> -> 
+[v][normal][unknown] <D-q> -> 
+[x][normal][unknown]  k -> 
+[x][normal][unknown]  sr -> 
+[x][normal][unknown] # -> 
+[x][motion][unknown] % -> <Plug>(MatchitVisualForward)
+[x][normal][unknown] * -> 
+[x][normal][unknown] @ -> mode() ==# 'V' ? ':normal! @'.getcharstr().'<CR>' : '@'
+[x][normal][unknown] Q -> mode() ==# 'V' ? ':normal! @<C-R>=reg_recorded()<CR><CR>' : 'Q'
+[x][normal][unknown] R -> 
+[x][normal][unknown] S -> 
+[x][normal][unknown] [% -> <Plug>(MatchitVisualMultiBackward)
+[x][normal][unknown] ]% -> <Plug>(MatchitVisualMultiForward)
+[x][normal][unknown] a% -> <Plug>(MatchitVisualTextObject)
+[x][motion][unknown] b -> 
+[x][motion][unknown] e -> 
+[x][normal][unknown] g% -> <Plug>(MatchitVisualBackward)
+[x][normal][unknown] gra -> 
+[x][normal][unknown] gc -> 
+[x][normal][unknown] gx -> 
+[x][normal][unknown] s -> 
+[x][motion][unknown] w -> 
+[x][normal][unknown] <Plug>(MatchitVisualTextObject) -> <Plug>(MatchitVisualMultiBackward)o<Plug>(MatchitVisualMultiForward)
+[x][normal][unknown] <Plug>(MatchitVisualMultiForward) -> :<C-U>call matchit#MultiMatch("W",  "n")<CR>m'gv``
+[x][normal][unknown] <Plug>(MatchitVisualMultiBackward) -> :<C-U>call matchit#MultiMatch("bW", "n")<CR>m'gv``
+[x][normal][unknown] <Plug>(MatchitVisualBackward) -> :<C-U>call matchit#Match_wrapper('',0,'v')<CR>m'gv``
+[x][normal][unknown] <Plug>(MatchitVisualForward) -> :<C-U>call matchit#Match_wrapper('',1,'v')<CR>:if col("''") != col("$") | exe ":normal! m'" | endif<CR>gv``
+[x][normal][unknown] <D-q> -> 
+[t][normal][unknown] [[ -> 
+[t][normal][unknown] ]] -> 
+[t][normal][unknown] <D-q> -> 
+[o][motion][unknown] % -> <Plug>(MatchitOperationForward)
+[o][motion][unknown] R -> 
+[o][motion][unknown] S -> 
+[o][motion][unknown] [% -> <Plug>(MatchitOperationMultiBackward)
+[o][motion][unknown] ]% -> <Plug>(MatchitOperationMultiForward)
+[o][motion][unknown] b -> 
+[o][motion][unknown] e -> 
+[o][motion][unknown] g% -> <Plug>(MatchitOperationBackward)
+[o][motion][unknown] gc -> 
+[o][motion][unknown] r -> 
+[o][motion][unknown] s -> 
+[o][motion][unknown] w -> 
+[o][motion][unknown] <Plug>(MatchitOperationMultiForward) -> :<C-U>call matchit#MultiMatch("W",  "o")<CR>
+[o][motion][unknown] <Plug>(MatchitOperationMultiBackward) -> :<C-U>call matchit#MultiMatch("bW", "o")<CR>
+[o][motion][unknown] <Plug>(MatchitOperationBackward) -> :<C-U>call matchit#Match_wrapper('',0,'o')<CR>
+[o][motion][unknown] <Plug>(MatchitOperationForward) -> :<C-U>call matchit#Match_wrapper('',1,'o')<CR>
+[o][motion][unknown] <D-q> -> 

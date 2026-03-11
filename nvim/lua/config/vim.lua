@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+
+
 vim.opt.number = true
 
 vim.opt.tabstop = 4
@@ -73,6 +75,9 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.o.laststatus = 0
+
+
+
 
 local pairs_map = {
 	['()'] = '(',
